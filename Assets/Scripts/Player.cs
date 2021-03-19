@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
 
     public int maxHealth = 4;
     public int currentHealth;
+    [SerializeField] public GameObject loseScreen;
 
     public HealthBar healthBar;
 
@@ -17,20 +19,13 @@ public class Player : MonoBehaviour
         healthBar.SetMaxHealth(maxHealth);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void TakeDamage()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TakeDamage(1);
-        }
-    }
-
-    void TakeDamage(int damage)
-    {
-        currentHealth -= damage;
+        currentHealth -= 1;
 
         healthBar.SetHealth(currentHealth);
+        if (currentHealth <= 0)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
     }
 
 }
